@@ -1,5 +1,41 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
 
+/* General CSS styles that could apply across all of our pages */
 body {
   font-family: 'Open Sans', sans-serif;
+}
+
+.content-container {
+  width: 80%;
+  margin: auto;
+}
+
+/* Styles for new listing page.
+ * These styles can also be used for any other forms
+ * on our site if desired. */
+
+.form-container h2 {
+  text-align: center;
+}
+
+.form-container input {
+  width: 35%;
+  border: 2px solid black;
+  border-radius: 4px;
+  height: 25px;
+  padding-left: 1.5%;
+}
+
+.form-container textarea {
+  width: 75%;
+  height: 300px;
+  padding: 1%;
+  resize: none;
+  border: 2px solid black;
+  border-radius: 4px;
+}
+
+.form-container button {
+  margin-top: 5%;
+  float: right;
 }
