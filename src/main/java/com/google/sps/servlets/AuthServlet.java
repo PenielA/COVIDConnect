@@ -15,7 +15,6 @@
 package com.google.sps.servlets;
 
 import java.util.*;  
-import com.google.sps.data.AuthResponse;
 import com.google.gson.Gson;
 import java.util.ArrayList;
 import com.google.appengine.api.users.UserService;
