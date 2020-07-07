@@ -12,9 +12,9 @@
 
       <form action="/listings" method="POST">
         <p>Brief summary of what you need</p>
-        <input type="text" placeholder="Need help moving">
+        <input type="text" name="subject" placeholder="Need help moving" required>
         <p>Detailed explanation</p>
-        <textarea placeholder="I'm trying to move to another city for my new job..."></textarea>
+        <textarea name="description" placeholder="I'm trying to move to another city for my new job..." required></textarea>
         <br>
         <button type="submit">Create Listing!</button>
       </form>
