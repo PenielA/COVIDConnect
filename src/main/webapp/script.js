@@ -79,10 +79,4 @@ function createParagraphElement(text) {
   pElement.innerText = text;
   return pElement;
 }
-
-function createButtonElement(text) {
-  const button = document.createElement('p');
-  button.innerText = text;
-  return button;
-}
  
