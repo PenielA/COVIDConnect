@@ -1,13 +1,5 @@
 var currentListings = []
 
-class Listing {
-  constructor(subject, desc, time) {
-    this.subject = subject;
-    this.description = desc;
-    this.time = time;
-  }
-}
-
 function loadListings() {
   fetch_auth_info();
   getListings();
@@ -31,11 +23,9 @@ function getListings() {
 
   fetch('/listings').then(res => res.json())
   .then((fetchedListings) => {
-    currentListings = [];
+    currentListings = fetchedListings;
 
-    for (var l of fetchedListings) {
-      let newListing = Object.assign(new Listing(), l);
-      currentListings.push(newListing);
+    for (var newListing of fetchedListings) {
       container.appendChild(createDOMListing(newListing));
     }
   });
