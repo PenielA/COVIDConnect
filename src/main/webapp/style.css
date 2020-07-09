@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500&display=swap');
 
 /* General CSS styles that could apply across all of our pages */
 body {
@@ -10,7 +11,7 @@ body {
   margin: auto;
 }
 
-/* Styles for new listing page.
+/* Styles for NEW LISTING page.
  * These styles can also be used for any other forms
  * on our site if desired. */
 
@@ -38,4 +39,43 @@ body {
 .form-container button {
   margin-top: 5%;
   float: right;
+}
+
+/* Styling for LISTINGS page that displays all listings */
+.listing {
+  margin-bottom: 30px;
+}
+
+.listing p {
+  margin: 4px;
+}
+
+.listing div {
+  padding: 0.7% 1%;
+}
+
+.listing-header {
+  border: 2px solid black;
+  border-bottom: none; /* supplied by body's border */
+  border-radius: 10px 10px 0px 0px;
+  background-color: #eaeaea;
+}
+
+.listing-body {
+  border: 2px solid black;
+  border-bottom: none;
+}
+
+.timestamp {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 14px;
+}
+
+.listing-footer {
+  padding-top: 3% !important; /* important only used because ".listing div" styles which are general overwrite this */
+  border: 2px solid black;
+  border-top: none;
+  border-radius: 0px 0px 10px 10px;
+  display: flex;
+  justify-content: space-between;
 }
