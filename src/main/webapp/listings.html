@@ -6,11 +6,11 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body onload="loadListings();">
+  <body onload="loadListings(); fetch_auth_info();">
     <ul>
         <li><a href="index.html">Home</a></li>
-        <li><a href="listings.html">View Listings</a></li>
-        <li><a href="new-listing.html">Create A Post</li>
+        <li><a href="listings.html" id ="listingsLink">View Listings</a></li>
+        <li><a href="new-listing.html" id ="newlistingsLink">Create A Post</li>
         <li><a href="#" id="loglink"></a></li>
     </ul>
     <div class="content-container">

@@ -5,11 +5,16 @@ function loadListings() {
   getListings();
 }
 
+//   Adjusts links on the nav bar based on whether the user is logged in
 function fetch_auth_info(){
-  fetch('/AuthServlet').then(response => response.json()).then((logUrl) => {
-  console.log(logUrl);
-  document.getElementById("loglink").href = logUrl[1];
-  document.getElementById("loglink").innerText = logUrl[0];
+    fetch('/AuthServlet').then(response => response.json()).then((logUrl) => {
+    console.log(logUrl);
+    document.getElementById("loglink").innerText = logUrl[0];
+    document.getElementById("loglink").href = logUrl[1];
+    if (logUrl[0] == "Login") {
+        document.getElementById("listingsLink").href = logUrl[2];
+        document.getElementById("newlistingsLink").href = logUrl[3];
+    }
     });
 }
 

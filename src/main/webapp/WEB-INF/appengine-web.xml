@@ -7,4 +7,15 @@
     <!-- prevent unwanted caching when accessing via the web preview server -->
     <include path="/**" expiration="0s" />
   </static-files>
+  <!-- <security-constraint>
+    <web-resource-collection>
+        <web-resource-name>listings.html</web-resource-name>
+        <url-pattern>/listings.html/*</url-pattern>
+    </web-resource-collection>
+        <auth-constraint>
+        <role-name>*</role-name>
+        </auth-constraint>
+  </security-constraint> -->
 </appengine-web-app>
+
+
