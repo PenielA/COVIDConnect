@@ -1,4 +1,5 @@
-var currentListings = []
+var currentListings = [];
+var currentUser;
 
 function loadListings() {
   fetch_auth_info();
@@ -6,11 +7,17 @@ function loadListings() {
 }
 
 function fetch_auth_info(){
-  fetch('/AuthServlet').then(response => response.json()).then((logUrl) => {
-  console.log(logUrl);
-  document.getElementById("loglink").href = logUrl[1];
-  document.getElementById("loglink").innerText = logUrl[0];
-    });
+  fetch('/AuthServlet').then(response => response.json()).then((userData) => {
+  currentUser = userData;
+  console.log(userData);
+  if (userData.loginUrl) {
+    document.getElementById("loglink").innerText = "Login";
+    document.getElementById("loglink").href = userData.loginUrl;
+  }
+  else {
+    document.getElementById("loglink").innerText = "Logout";
+    document.getElementById("loglink").href = userData.logoutUrl;
+  }});
 }
 
 /**

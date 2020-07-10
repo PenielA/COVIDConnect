@@ -28,25 +28,26 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/AuthServlet")
 public class AuthServlet extends HttpServlet {
 
+  private static class UserData {
+    public String loginUrl = "";
+    public String logoutUrl = "";
+  }
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Gson gson = new Gson();
     response.setContentType("application/json;");
-    ArrayList<String> logInfo = new ArrayList<>();
+    UserData userData = new UserData();
     String urlToRedirectTo= "/index.html";
 
     UserService userService = UserServiceFactory.getUserService();
     if (userService.isUserLoggedIn()) {
-      String logoutUrl = userService.createLogoutURL(urlToRedirectTo);
-      logInfo.add("Logout");
-      logInfo.add(logoutUrl);    
-      response.getWriter().println(gson.toJson(logInfo));
+      userData.logoutUrl = userService.createLogoutURL(urlToRedirectTo);   
+      response.getWriter().println(gson.toJson(userData));
     } else {
       String urlToRedirectToAfterUserLogsIn = "/index.html";
-      String loginUrl = userService.createLoginURL(urlToRedirectTo);
-      logInfo.add("Login");
-      logInfo.add(loginUrl);
-      response.getWriter().println(gson.toJson(logInfo));  
+      userData.loginUrl = userService.createLoginURL(urlToRedirectTo);
+      response.getWriter().println(gson.toJson(userData));
     }
   }
 }
