@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.google.appengine.api.users.User;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,6 +32,7 @@ public class AuthServlet extends HttpServlet {
   private static class UserData {
     public String loginUrl = "";
     public String logoutUrl = "";
+    public User info = null;
   }
 
   @Override
@@ -42,7 +44,8 @@ public class AuthServlet extends HttpServlet {
 
     UserService userService = UserServiceFactory.getUserService();
     if (userService.isUserLoggedIn()) {
-      userData.logoutUrl = userService.createLogoutURL(urlToRedirectTo);   
+      userData.logoutUrl = userService.createLogoutURL(urlToRedirectTo);
+      userData.info = userService.getCurrentUser();
       response.getWriter().println(gson.toJson(userData));
     } else {
       String urlToRedirectToAfterUserLogsIn = "/index.html";
