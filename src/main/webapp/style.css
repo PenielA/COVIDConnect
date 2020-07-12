@@ -2,6 +2,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500&display=swap');
 
 /* General CSS styles that could apply across all of our pages */
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
 body {
   font-family: 'Open Sans', sans-serif;
 }
@@ -14,6 +19,39 @@ body {
 /* Styles for NEW LISTING page.
  * These styles can also be used for any other forms
  * on our site if desired. */
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 8vh;
+    background-color: #232F34;
+}
+
+.logo{
+    color: rgb(226, 226, 226);
+    letter-spacing: 5px;
+    font-size: 20px;
+}
+
+.nav-links{
+    display: flex;
+    justify-content: space-around;
+    width: 30%;
+    margin-right: 0px;
+}
+
+.nav-links li{
+    list-style: none;
+    float: right;
+}
+
+.nav-links a{
+    color: rgb(226, 226, 226);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+}
 
 .form-container h2 {
   text-align: center;
