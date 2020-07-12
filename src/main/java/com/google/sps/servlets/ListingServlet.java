@@ -20,11 +20,15 @@ public class ListingServlet extends HttpServlet {
   private static class Listing {
     private String subject;
     private String description;
+    private String email;
+    private String userId;
     private long timestamp;
 
-    public Listing(String subject, String desc, long time) {
+    public Listing(String subject, String desc, String email, String userId, long time) {
       this.subject = subject;
       this.description = desc;
+      this.email = email;
+      this.userId = userId;
       this.timestamp = time;
     }
   }
@@ -43,6 +47,8 @@ public class ListingServlet extends HttpServlet {
     for (Entity e : results.asIterable()) {
       Listing newListing = new Listing((String) e.getProperty("subject"),
                                        (String) e.getProperty("description"),
+                                       (String) e.getProperty("email"),
+                                       (String) e.getProperty("userId"),
                                        (long) e.getProperty("timestamp"));
       listings.add(newListing);
     }
@@ -58,6 +64,8 @@ public class ListingServlet extends HttpServlet {
     // Get data from client request
     String subject = request.getParameter("subject");
     String desc = request.getParameter("description");
+    String email = request.getParameter("email");
+    String userId = request.getParameter("userId");
     long timestamp = System.currentTimeMillis();
 
     // Get Datastore Service
@@ -67,6 +75,8 @@ public class ListingServlet extends HttpServlet {
     Entity newListing = new Entity("Listing");
     newListing.setProperty("subject", subject);
     newListing.setProperty("description", desc);
+    newListing.setProperty("email", email);
+    newListing.setProperty("userId", userId);
     newListing.setProperty("timestamp", timestamp);
 
     datastore.put(newListing);
