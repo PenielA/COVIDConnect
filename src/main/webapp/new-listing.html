@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css"></link>
     <script src="script.js"></script>
   </head>
-  <body onload="fetch_auth_info();">
+  <body onload="loadFormData();">
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="listings.html" id ="listingsLink">View Listings</a></li>
@@ -18,6 +18,8 @@
 
       <form action="/listings" method="POST">
         <p>Brief summary of what you need</p>
+        <input type="text" name="email" hidden>
+        <input type="text" name="userId" hidden>
         <input type="text" name="subject" placeholder="Need help moving" required>
         <p>Detailed explanation</p>
         <textarea name="description" placeholder="I'm trying to move to another city for my new job..." required></textarea>

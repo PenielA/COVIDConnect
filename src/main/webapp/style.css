@@ -59,6 +59,8 @@ body {
   border-bottom: none; /* supplied by body's border */
   border-radius: 10px 10px 0px 0px;
   background-color: #eaeaea;
+  display: flex;
+  justify-content: space-between;
 }
 
 .listing-body {
