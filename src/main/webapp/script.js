@@ -1,4 +1,5 @@
-var currentListings = []
+var currentListings = [];
+var currentUser;
 
 function loadListings() {
   fetch_auth_info();
@@ -7,15 +8,17 @@ function loadListings() {
 
 //   Adjusts links on the nav bar based on whether the user is logged in
 function fetch_auth_info(){
-    fetch('/AuthServlet').then(response => response.json()).then((logUrl) => {
-    console.log(logUrl);
-    document.getElementById("loglink").innerText = logUrl[0];
-    document.getElementById("loglink").href = logUrl[1];
-    if (logUrl[0] == "Login") {
-        document.getElementById("listingsLink").href = logUrl[2];
-        document.getElementById("newlistingsLink").href = logUrl[3];
-    }
-    });
+  return fetch('/AuthServlet').then(response => response.json()).then((userData) => {
+  currentUser = userData;
+  console.log(userData);
+  if (userData.loginUrl) {
+    document.getElementById("loglink").innerText = "Login";
+    document.getElementById("loglink").href = userData.loginUrl;
+  }
+  else {
+    document.getElementById("loglink").innerText = "Logout";
+    document.getElementById("loglink").href = userData.logoutUrl;
+  }});
 }
 
 /**
@@ -55,6 +58,7 @@ function createDOMListing(listing) {
   // Populate fields
   // Top bar of listing (according to wireframe)
   header.appendChild(createParagraphElement(listing.subject));
+  header.appendChild(createParagraphElement(listing.email));
 
   // Main part of listing (according to wireframe)
   body.appendChild(createParagraphElement(listing.description));
@@ -64,6 +68,21 @@ function createDOMListing(listing) {
   timestampHTML.innerText = (new Date(listing.timestamp));
 
   return listingHTML;
+}
+
+/**
+ * Loads some hidden HTML fields with user data to pass to backend datastore
+ */
+function loadFormData() {
+  fetch_auth_info().then((res) => {
+    emailInput = document.querySelector('input[name="email"]');
+    userIdInput = document.querySelector('input[name="userId"]');
+
+    if (currentUser.info) {
+      emailInput.setAttribute('value', currentUser.info.email);
+      userIdInput.setAttribute('value', currentUser.info.userId);
+    }
+  });
 }
 
 /**
