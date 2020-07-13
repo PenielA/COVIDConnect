@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css"></link>
     <script src="script.js"></script>
   </head>
-  <body onload="fetch_auth_info();">
+  <body onload="fetch_auth_info(); loadFormData();">
     <nav>
         <div class="logo">
             <h4>COVIDConnect</h4>
@@ -15,8 +15,6 @@
             <li><a href="index.html">Home</a></li>
             <li><a href="listings.html">View Listings</a></li>
             <li><a href="new-listing.html">Create A Post</a></li>
-            <!-- //error when u click this link^ when ur at create post url?? need to fix -->
-
             <li><a href="#" id="loglink"></a></li>
         </ul> 
     </nav>
@@ -25,6 +23,8 @@
 
       <form action="/listings" method="POST">
         <p>Brief summary of what you need</p>
+        <input type="text" name="email" hidden>
+        <input type="text" name="userId" hidden>
         <input type="text" name="subject" placeholder="Need help moving" required>
         <p>Detailed explanation</p>
         <textarea name="description" placeholder="I'm trying to move to another city for my new job..." required></textarea>

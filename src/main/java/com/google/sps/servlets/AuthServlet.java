@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.google.appengine.api.users.User;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,25 +29,33 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/AuthServlet")
 public class AuthServlet extends HttpServlet {
 
+  private static class UserData {
+    public String loginUrl = "";
+    public String logoutUrl = "";
+    public User info = null;
+  }
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Gson gson = new Gson();
     response.setContentType("application/json;");
-    ArrayList<String> logInfo = new ArrayList<>();
+
+    UserData userData = new UserData();
     String urlToRedirectTo= "/index.html";
 
+    // tests whether user is loogged in or not and add appropriate links to ArrayList
+    // to then send to the javascript to update nav bar accordingly
+    
     UserService userService = UserServiceFactory.getUserService();
     if (userService.isUserLoggedIn()) {
-      String logoutUrl = userService.createLogoutURL(urlToRedirectTo);
-      logInfo.add("Logout");
-      logInfo.add(logoutUrl);    
-      response.getWriter().println(gson.toJson(logInfo));
+      userData.logoutUrl = userService.createLogoutURL(urlToRedirectTo);
+      userData.info = userService.getCurrentUser();
+      response.getWriter().println(gson.toJson(userData));
     } else {
       String urlToRedirectToAfterUserLogsIn = "/index.html";
-      String loginUrl = userService.createLoginURL(urlToRedirectTo);
-      logInfo.add("Login");
-      logInfo.add(loginUrl);
-      response.getWriter().println(gson.toJson(logInfo));  
+      userData.loginUrl = userService.createLoginURL(urlToRedirectTo);
+      response.getWriter().println(gson.toJson(userData));
+
     }
   }
 }
