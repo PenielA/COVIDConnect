@@ -6,6 +6,7 @@ function loadListings() {
   getListings();
 }
 
+//   Adjusts links on the nav bar based on whether the user is logged in
 function fetch_auth_info(){
   return fetch('/AuthServlet').then(response => response.json()).then((userData) => {
   currentUser = userData;
@@ -18,6 +19,7 @@ function fetch_auth_info(){
     document.getElementById("loglink").innerText = "Logout";
     document.getElementById("loglink").href = userData.logoutUrl;
   }});
+
 }
 
 /**

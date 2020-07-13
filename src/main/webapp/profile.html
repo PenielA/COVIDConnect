@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="style.css"></link>
+    <script src="script.js"></script>
+  </head>
+  <body onload="fetch_auth_info();">
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="listings.html" id ="listingsLink">View Listings</a></li>
+        <li><a href="new-listing.html" id ="newlistingsLink">Create A Post</li>  
+        <li><a href="#" id="loglink"></a></li>
+    </ul> 
+    <div class="content-container">
+      <form action="/profile" method="POST">
+        <!-- <p>Add photo</p>
+        <input type="text" name="subject" placeholder="Need help moving" required> -->
+        <p>Name</p>
+        <textarea name="name" value="Tay" placeholder="Ex:John" required></textarea>
+        <!-- onload from Javascript add to text of file? -->
+        <p>Email</p>
+        <textarea name="email" placeholder="john@gmail.com" required></textarea>        
+        <br>
+        <button type="submit">Save Changes</button>
+      </form>
+    </div>
+  </body>
+</html>

@@ -39,9 +39,13 @@ public class AuthServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Gson gson = new Gson();
     response.setContentType("application/json;");
+
     UserData userData = new UserData();
     String urlToRedirectTo= "/index.html";
 
+    // tests whether user is loogged in or not and add appropriate links to ArrayList
+    // to then send to the javascript to update nav bar accordingly
+    
     UserService userService = UserServiceFactory.getUserService();
     if (userService.isUserLoggedIn()) {
       userData.logoutUrl = userService.createLogoutURL(urlToRedirectTo);
@@ -51,6 +55,7 @@ public class AuthServlet extends HttpServlet {
       String urlToRedirectToAfterUserLogsIn = "/index.html";
       userData.loginUrl = userService.createLoginURL(urlToRedirectTo);
       response.getWriter().println(gson.toJson(userData));
+
     }
   }
 }
