@@ -2,13 +2,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500&display=swap');
 
 /* General CSS styles that could apply across all of our pages */
-*{
-    margin: 0px;
-    padding: 0px;
-    box-sizing: border-box;
-}
 body {
   font-family: 'Open Sans', sans-serif;
+  margin: 0px;
 }
 
 .content-container {
@@ -24,7 +20,7 @@ nav {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    min-height: 8vh;
+    height: 68px;
     background-color: #232F34;
 }
 
@@ -39,6 +35,7 @@ nav {
     justify-content: space-around;
     width: 30%;
     margin-right: 0px;
+    padding: 0px;
 }
 
 .nav-links li{
