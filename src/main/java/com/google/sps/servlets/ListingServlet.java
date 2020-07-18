@@ -12,6 +12,8 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import java.util.ArrayList;
 
 @WebServlet("/listings")
@@ -27,7 +29,7 @@ public class ListingServlet extends HttpServlet {
 
     public Listing(Key uniqueKey, String subject, String desc, String email, String userId, long time) {
       this.uniqueKey = KeyFactory.keyToString(uniqueKey);
-      //System.out.println(this.uniqueKey);
+      System.out.println(this.uniqueKey);
       this.subject = subject;
       this.description = desc;
       this.email = email;
