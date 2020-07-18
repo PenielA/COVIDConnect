@@ -45,11 +45,7 @@ function getListings() {
  */
 function createDOMListing(listing) {
   // Get hidden Listing structure
-  const listingHTML = document.getElementById('listing-template').cloneNode(true);
-
-  // Remove template-unique attributes
-  listingHTML.removeAttribute('id');
-  listingHTML.removeAttribute('hidden');
+  const listingHTML = document.getElementById('listing-template').content.cloneNode(true);
 
   // Get main parts of listing
   let header = listingHTML.querySelector('.listing-header');
