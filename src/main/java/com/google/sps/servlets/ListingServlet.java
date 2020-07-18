@@ -29,7 +29,6 @@ public class ListingServlet extends HttpServlet {
 
     public Listing(Key uniqueKey, String subject, String desc, String email, String userId, long time) {
       this.uniqueKey = KeyFactory.keyToString(uniqueKey);
-      System.out.println(this.uniqueKey);
       this.subject = subject;
       this.description = desc;
       this.email = email;

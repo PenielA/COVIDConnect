@@ -33,7 +33,7 @@ function getListings() {
   fetch('/listings').then(res => res.json())
   .then((fetchedListings) => {
     currentListings = fetchedListings;
-
+    console.log(currentListings);
     for (var newListing of fetchedListings) {
       container.appendChild(createDOMListing(newListing));
     }
@@ -51,18 +51,22 @@ function createDOMListing(listing) {
   listingHTML.removeAttribute('id');
   listingHTML.removeAttribute('hidden');
 
-  // Get two main parts of the Listing
+  // Get main parts of listing
   let header = listingHTML.querySelector('.listing-header');
   let body = listingHTML.querySelector('.listing-body');
   let footer = listingHTML.querySelector('.listing-footer');
 
   // Populate fields
   // Top bar of listing (according to wireframe)
-  header.appendChild(createParagraphElement(listing.subject));
-  header.appendChild(createParagraphElement(listing.email));
+  header.querySelector('.header-subject').innerText = listing.subject;
+  header.querySelector('.header-name').innerText = listing.email;
 
   // Main part of listing (according to wireframe)
-  body.appendChild(createParagraphElement(listing.description));
+  body.querySelector('.body-desc').innerText = listing.description;
+
+  // Fill in hidden key data
+  let hiddenKey = body.querySelector('input[name="key"]');
+  hiddenKey.setAttribute('value', listing.uniqueKey);
 
   // Bottom bar of listing.
   let timestampHTML = footer.querySelector('.timestamp');
