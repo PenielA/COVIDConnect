@@ -18,13 +18,16 @@ import java.util.ArrayList;
 public class ListingServlet extends HttpServlet {
 
   private static class Listing {
+    private String uniqueKey;
     private String subject;
     private String description;
     private String email;
     private String userId;
     private long timestamp;
 
-    public Listing(String subject, String desc, String email, String userId, long time) {
+    public Listing(Key uniqueKey, String subject, String desc, String email, String userId, long time) {
+      this.uniqueKey = KeyFactory.keyToString(uniqueKey);
+      //System.out.println(this.uniqueKey);
       this.subject = subject;
       this.description = desc;
       this.email = email;
@@ -45,7 +48,8 @@ public class ListingServlet extends HttpServlet {
 
     // Add each listing to our array
     for (Entity e : results.asIterable()) {
-      Listing newListing = new Listing((String) e.getProperty("subject"),
+      Listing newListing = new Listing((Key) e.getKey(),
+                                       (String) e.getProperty("subject"),
                                        (String) e.getProperty("description"),
                                        (String) e.getProperty("email"),
                                        (String) e.getProperty("userId"),
