@@ -12,19 +12,23 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import java.util.ArrayList;
 
 @WebServlet("/listings")
 public class ListingServlet extends HttpServlet {
 
   private static class Listing {
+    private String uniqueKey;
     private String subject;
     private String description;
     private String email;
     private String userId;
     private long timestamp;
 
-    public Listing(String subject, String desc, String email, String userId, long time) {
+    public Listing(Key uniqueKey, String subject, String desc, String email, String userId, long time) {
+      this.uniqueKey = KeyFactory.keyToString(uniqueKey);
       this.subject = subject;
       this.description = desc;
       this.email = email;
@@ -45,7 +49,8 @@ public class ListingServlet extends HttpServlet {
 
     // Add each listing to our array
     for (Entity e : results.asIterable()) {
-      Listing newListing = new Listing((String) e.getProperty("subject"),
+      Listing newListing = new Listing((Key) e.getKey(),
+                                       (String) e.getProperty("subject"),
                                        (String) e.getProperty("description"),
                                        (String) e.getProperty("email"),
                                        (String) e.getProperty("userId"),

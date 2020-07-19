@@ -21,14 +21,24 @@
     <div class="content-container">
       <h1>Listings!</h1>
       <div id="listings-container"></div>
-      <div class="listing" id="listing-template" hidden>
-        <div class="listing-header"></div>
-        <div class="listing-body"></div>
-        <div class="listing-footer">
-          <p class="timestamp"></p>
-          <button>Contact User!</button>
+      
+      <template id="listing-template">
+        <div class="listing">
+          <div class="listing-header">
+            <p class="header-subject"></p>
+            <p class="header-name"></p>
+          </div>
+          <div class="listing-body">
+            <p class="body-desc"></p>
+            <form>
+              <input type="hidden" name="key" value="">
+            </form>
+          </div>
+          <div class="listing-footer">
+            <p class="timestamp"></p>
+          </div>
         </div>
-      </div>
+      </template>
     </div>
   </body>
 </html>
