@@ -1,15 +1,13 @@
 let currentListings = [];
 let currentUser;
 
-
+/** 
+  * Function is called from listings.html page and uses fetch requests
+  * and chained promises to call fetch_auth_info and getListings
+ */
 function loadListings() {
-  fetch_auth_info();
-  getListings();
+  fetch_auth_info().then((res) => {getListings();});
 }
-
-// function loadListings() {
-//   fetch_auth_info().then((res) => {getListings();});
-// }
 
 /**
   * Fetches comments from datastore, converts them to JSON and then does 2 things:
@@ -84,14 +82,40 @@ function createParagraphElement(text) {
   return pElement;
 }
 
-//   Adjusts links on the nav bar based on whether the user is logged in
+/**
+  *Helper function is called to keep forms on new-listing page
+  *and listings on listing.html page hidden while redirecting 
+  *to login/logout Google sign in portal
+ */
+function setContentVisible(contentElement, isVisible) {
+    if (contentElement) {
+      if (isVisible) {
+        contentElement.style.visibility = "visible";
+      }
+      else {
+        contentElement.style.visibility = "hidden";
+      }
+    }
+}
+
+/**
+  * Adjusts links on the nav bar based on whether the user is logged in
+ */   
 function fetch_auth_info(){
+
+  //hides information on listings page and newlisting page if not logged in
+  let contentElement = document.querySelector('.load-auth');
+  setContentVisible(contentElement, false);
+  
+  //allows us to pass in which page the user is on to use in servelet
   let currentUrl = window.location.href;
   let currentPage = currentUrl.substring(currentUrl.lastIndexOf('/'));
   currentPage = currentPage === '/?authuser=0' ? '/index.html' : currentPage;
   const params = new URLSearchParams();
   params.append('currentPage', currentPage);
   
+  //assigns a loginurl/logouturl to navbar to display
+  // or it redirects directly to login google page
   console.log(currentPage);
   return fetch('/AuthServlet', {
     method: 'POST',
@@ -109,6 +133,7 @@ function fetch_auth_info(){
     }
   }
   else {
+    setContentVisible(contentElement, true);
     document.getElementById("loglink").innerText = "Logout";
     document.getElementById("loglink").href = userData.logoutUrl;
   }
