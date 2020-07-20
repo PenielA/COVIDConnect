@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css"></link>
     <script src="script.js"></script>
   </head>
-  <body onload="fetch_auth_info(); loadFormData();">
+  <body onload="loadFormData();">
     <nav>
         <div class="logo">
             <h4>COVIDConnect</h4>
@@ -18,7 +18,7 @@
             <li><a href="#" id="loglink"></a></li>
         </ul> 
     </nav>
-    <div class="content-container form-container">
+    <div class="content-container form-container load-auth">
       <h2>I am looking for help with...</h2>
 
       <form action="/listings" method="POST">
