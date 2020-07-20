@@ -1,25 +1,15 @@
-var currentListings = [];
-var currentUser;
+let currentListings = [];
+let currentUser;
+
 
 function loadListings() {
   fetch_auth_info();
   getListings();
 }
 
-//   Adjusts links on the nav bar based on whether the user is logged in
-function fetch_auth_info(){
-  return fetch('/AuthServlet').then(response => response.json()).then((userData) => {
-  currentUser = userData;
-  console.log(userData);
-  if (userData.loginUrl) {
-    document.getElementById("loglink").innerText = "Login";
-    document.getElementById("loglink").href = userData.loginUrl;
-  }
-  else {
-    document.getElementById("loglink").innerText = "Logout";
-    document.getElementById("loglink").href = userData.logoutUrl;
-  }});
-}
+// function loadListings() {
+//   fetch_auth_info().then((res) => {getListings();});
+// }
 
 /**
   * Fetches comments from datastore, converts them to JSON and then does 2 things:
@@ -92,5 +82,36 @@ function createParagraphElement(text) {
   const pElement = document.createElement('p');
   pElement.innerText = text;
   return pElement;
+}
+
+//   Adjusts links on the nav bar based on whether the user is logged in
+function fetch_auth_info(){
+  let currentUrl = window.location.href;
+  let currentPage = currentUrl.substring(currentUrl.lastIndexOf('/'));
+  currentPage = currentPage === '/?authuser=0' ? '/index.html' : currentPage;
+  const params = new URLSearchParams();
+  params.append('currentPage', currentPage);
+
+  console.log(currentPage);
+  fetch('/AuthServlet', {
+    method: 'POST',
+    body: params
+  }).then(response => response.json()).then((userData) => {
+  currentUser = userData;
+  console.log(userData);
+  if (userData.loginUrl) {
+    if (currentPage === '/index.html') {
+      document.getElementById("loglink").innerText = "Login";
+      document.getElementById("loglink").href = userData.loginUrl;
+    }
+    else {
+      window.location.replace(userData.loginUrl);
+    }
+  }
+  else {
+    document.getElementById("loglink").innerText = "Logout";
+    document.getElementById("loglink").href = userData.logoutUrl;
+  }
+  });
 }
  
