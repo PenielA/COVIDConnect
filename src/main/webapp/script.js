@@ -91,9 +91,9 @@ function fetch_auth_info(){
   currentPage = currentPage === '/?authuser=0' ? '/index.html' : currentPage;
   const params = new URLSearchParams();
   params.append('currentPage', currentPage);
-
+  
   console.log(currentPage);
-  fetch('/AuthServlet', {
+  return fetch('/AuthServlet', {
     method: 'POST',
     body: params
   }).then(response => response.json()).then((userData) => {
