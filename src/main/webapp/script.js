@@ -6,29 +6,8 @@ let currentUser;
   * and chained promises to call fetch_auth_info and getListings
  */
 function loadListings() {
-
     fetch_auth_info();
     getListings();
-}
-
-//   Adjusts links on the nav bar based on whether the user is logged in
-function fetch_auth_info() {
-    return fetch('/AuthServlet').then(response => response.json()).then((userData) => {
-        currentUser = userData;
-        console.log(userData);
-        if (userData.loginUrl) {
-            document.getElementById("loglink").innerText = "Login";
-            document.getElementById("loglink").href = userData.loginUrl;
-        }
-        else {
-            document.getElementById("loglink").innerText = "Logout";
-            document.getElementById("loglink").href = userData.logoutUrl;
-        }
-    });
-
-
-  fetch_auth_info().then((res) => {getListings();});
-
 }
 
 /**
@@ -60,6 +39,7 @@ function createDOMListing(listing) {
     let header = listingHTML.querySelector('.listing-header');
     let body = listingHTML.querySelector('.listing-body');
     let footer = listingHTML.querySelector('.listing-footer');
+    let contactForm = listingHTML.querySelector('.listing-form');
 
     // Populate fields
     // Top bar of listing (according to wireframe)
@@ -70,13 +50,17 @@ function createDOMListing(listing) {
     body.querySelector('.body-desc').innerText = listing.description;
 
     // Fill in hidden key data
-    let hiddenKey = body.querySelector('input[name="key"]');
+    let hiddenKey = contactForm.querySelector('input[name="key"]');
     hiddenKey.setAttribute('value', listing.uniqueKey);
 
     // Bottom bar of listing.
     let timestampHTML = footer.querySelector('.timestamp');
     timestampHTML.innerText = (new Date(listing.timestamp));
 
+    //reset forms on each listing to hidden initially when page is loaded
+    listing.contactForm = false;
+    setContentVisible(contactForm, false);
+    
     return listingHTML;
 }
 
@@ -131,6 +115,22 @@ function setContentVisible(contentElement, isVisible) {
     }
 }
 
+function toggle_form(){
+    //fetch servelet pass in key of listing
+    //return listing in json
+    //if formshow true, display form
+    fetch('/toggle').then(res => res.json())
+        .then((fetchedlisting) => {
+            if (listing.contactForm == false){
+                setContentVisible(contactForm, false);
+            }else {
+                setContentVisible(contactForm, true);
+            }
+        });
+    // let hiddenKeys = Array.from(document.getElementsByName("key"));
+    // console.log(hiddenKeys);
+    // if ()
+}
 /**
   * Adjusts links on the nav bar based on whether the user is logged in
  */   

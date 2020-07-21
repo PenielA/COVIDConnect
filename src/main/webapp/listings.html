@@ -30,13 +30,22 @@
           </div>
           <div class="listing-body">
             <p class="body-desc"></p>
-            <form>
-              <input type="hidden" name="key" value="">
-            </form>
           </div>
           <div class="listing-footer">
             <p class="timestamp"></p>
+            <form action="/toggle" method="POST">   
+                <button onclick="toggle_form();" id="contactButton"type="button">Contact User</button> 
+                <input type="hidden" name="key" value="">
+            </form>
           </div>
+         <div class="listing-form">
+             <form action="/contactListingform" method="POST">
+              <input type="hidden" name="key" value="">
+              <p>Type message to contact owner of this post</p>
+              <input type="text" name="message" placeholder="Hi my name is John and I can help with..." required>
+              <button type="submit">Send Message</button>
+             </form>
+         </div>
         </div>
       </template>
     </div>

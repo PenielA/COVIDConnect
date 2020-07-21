@@ -38,8 +38,9 @@ public class ListingServlet extends HttpServlet {
     private String email;
     private String userId;
     private long timestamp;
+    private boolean contactForm;
 
-    public Listing(Key uniqueKey, String subject, String desc, String imageUrl, String email, String userId, long time) {
+    public Listing(Key uniqueKey, String subject, String desc, String imageUrl, String email, String userId, long time, boolean contactForm) {
       this.uniqueKey = KeyFactory.keyToString(uniqueKey);
       this.subject = subject;
       this.description = desc;
@@ -47,6 +48,7 @@ public class ListingServlet extends HttpServlet {
       this.email = email;
       this.userId = userId;
       this.timestamp = time;
+      this.contactForm = contactForm;
     }
   }
 
@@ -68,7 +70,8 @@ public class ListingServlet extends HttpServlet {
                                        (String) e.getProperty("imageUrl"),
                                        (String) e.getProperty("email"),
                                        (String) e.getProperty("userId"),
-                                       (long) e.getProperty("timestamp"));
+                                       (long) e.getProperty("timestamp"),
+                                       (boolean) e.getProperty("contactForm"));
       listings.add(newListing);
     }
 
@@ -100,6 +103,7 @@ public class ListingServlet extends HttpServlet {
     newListing.setProperty("userId", userId);
     newListing.setProperty("timestamp", timestamp);
     newListing.setProperty("image", imageUrl);
+    newListing.setProperty("contactForm", false);
 
 
     datastore.put(newListing);
