@@ -34,14 +34,16 @@ public class ListingServlet extends HttpServlet {
     private String uniqueKey;
     private String subject;
     private String description;
+    private String imageUrl;
     private String email;
     private String userId;
     private long timestamp;
 
-    public Listing(Key uniqueKey, String subject, String desc, String email, String userId, long time) {
+    public Listing(Key uniqueKey, String subject, String desc, String imageUrl, String email, String userId, long time) {
       this.uniqueKey = KeyFactory.keyToString(uniqueKey);
       this.subject = subject;
       this.description = desc;
+      this.imageUrl = imageUrl;
       this.email = email;
       this.userId = userId;
       this.timestamp = time;
@@ -63,6 +65,7 @@ public class ListingServlet extends HttpServlet {
       Listing newListing = new Listing((Key) e.getKey(),
                                        (String) e.getProperty("subject"),
                                        (String) e.getProperty("description"),
+                                       (String) e.getProperty("imageUrl"),
                                        (String) e.getProperty("email"),
                                        (String) e.getProperty("userId"),
                                        (long) e.getProperty("timestamp"));
