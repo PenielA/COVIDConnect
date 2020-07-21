@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css"></link>
     <script src="script.js"></script>
   </head>
-  <body onload="loadFormData();">
+  <body onload="fetch_auth_info(); loadFormData(); fetchBlobstoreUrlAndShowForm();">
     <nav>
         <div class="logo">
             <h4>COVIDConnect</h4>
@@ -21,12 +21,13 @@
     <div class="content-container form-container load-auth">
       <h2>I am looking for help with...</h2>
 
-      <form action="/listings" method="POST">
+      <form id="my-post" action="/listings" method="POST" enctype="multipart/form-data">
         <p>Brief summary of what you need</p>
         <input type="text" name="email" hidden>
         <input type="text" name="userId" hidden>
         <input type="text" name="subject" placeholder="Need help moving" required>
         <p>Detailed explanation</p>
+        <input type="file" name="image">
         <textarea name="description" placeholder="I'm trying to move to another city for my new job..." required></textarea>
         <br>
         <button type="submit">Create Listing!</button>

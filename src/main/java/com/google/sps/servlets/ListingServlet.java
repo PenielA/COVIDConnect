@@ -12,6 +12,17 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.blobstore.BlobInfo;
+import com.google.appengine.api.blobstore.BlobInfoFactory;
+import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.api.blobstore.BlobstoreService;
+import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
+import com.google.appengine.api.images.ImagesService;
+import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.images.ServingUrlOptions;
+import java.util.List;
+import java.util.Map;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import java.util.ArrayList;
@@ -23,14 +34,16 @@ public class ListingServlet extends HttpServlet {
     private String uniqueKey;
     private String subject;
     private String description;
+    private String imageUrl;
     private String email;
     private String userId;
     private long timestamp;
 
-    public Listing(Key uniqueKey, String subject, String desc, String email, String userId, long time) {
+    public Listing(Key uniqueKey, String subject, String desc, String imageUrl, String email, String userId, long time) {
       this.uniqueKey = KeyFactory.keyToString(uniqueKey);
       this.subject = subject;
       this.description = desc;
+      this.imageUrl = imageUrl;
       this.email = email;
       this.userId = userId;
       this.timestamp = time;
@@ -52,6 +65,7 @@ public class ListingServlet extends HttpServlet {
       Listing newListing = new Listing((Key) e.getKey(),
                                        (String) e.getProperty("subject"),
                                        (String) e.getProperty("description"),
+                                       (String) e.getProperty("imageUrl"),
                                        (String) e.getProperty("email"),
                                        (String) e.getProperty("userId"),
                                        (long) e.getProperty("timestamp"));
@@ -69,8 +83,10 @@ public class ListingServlet extends HttpServlet {
     // Get data from client request
     String subject = request.getParameter("subject");
     String desc = request.getParameter("description");
+    String imageUrl = getUploadedFileUrl(request,"image");
     String email = request.getParameter("email");
     String userId = request.getParameter("userId");
+
     long timestamp = System.currentTimeMillis();
 
     // Get Datastore Service
@@ -83,8 +99,44 @@ public class ListingServlet extends HttpServlet {
     newListing.setProperty("email", email);
     newListing.setProperty("userId", userId);
     newListing.setProperty("timestamp", timestamp);
+    newListing.setProperty("image", imageUrl);
+
 
     datastore.put(newListing);
     response.sendRedirect("/listings.html");
+    
+}
+private String getUploadedFileUrl(HttpServletRequest request, String formInputElementName) {
+    BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+    Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
+    List<BlobKey> blobKeys = blobs.get("image");
+
+    // User submitted form without selecting a file, so we can't get a URL. (dev server)
+    if (blobKeys == null || blobKeys.isEmpty()) {
+      return null;
+    }
+
+    // Our form only contains a single file input, so get the first index.
+    BlobKey blobKey = blobKeys.get(0);
+
+    // User submitted form without selecting a file, so we can't get a URL. (live server)
+    BlobInfo blobInfo = new BlobInfoFactory().loadBlobInfo(blobKey);
+    if (blobInfo.getSize() == 0) {
+      blobstoreService.delete(blobKey);
+      return null;
+    }
+   // Use ImagesService to get a URL that points to the uploaded file.
+    ImagesService imagesService = ImagesServiceFactory.getImagesService();
+    ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
+    String url = imagesService.getServingUrl(options);
+
+    // GCS's localhost preview is not actually on localhost,
+    // so make the URL relative to the current domain.
+    if(url.startsWith("http://localhost:8080/")){
+      url = url.replace("http://localhost:8080/", "/");
+    }
+    return url;
   }
 }
+
+  
