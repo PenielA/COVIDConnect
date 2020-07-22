@@ -48,6 +48,7 @@ function createDOMListing(listing) {
 
     // Main part of listing (according to wireframe)
     body.querySelector('.body-desc').innerText = listing.description;
+    body.querySelector('#image-Url').src = listing.imageUrl;
 
     // Fill in hidden key data
     let hiddenKey = contactForm.querySelector('input[name="key"]');
@@ -93,14 +94,14 @@ function loadFormData() {
 
 //fetches blobstore url and adds it to the form
 function fetchBlobstoreUrlAndShowForm() {
-  fetch('/blobstore-upload-url')
-      .then((response) => {
-        return response.text();
-      })
-      .then((imageUploadUrl) => {
-        const messageForm = document.getElementById('my-post');
-        messageForm.action = imageUploadUrl;
-      });
+    fetch('/blobstore-upload-url')
+        .then((response) => {
+            return response.text();
+        })
+        .then((imageUploadUrl) => {
+            const messageForm = document.getElementById('my-post');
+            messageForm.action = imageUploadUrl;
+        });
 }
 /**
  * Given some text, creates a paragraph element;
