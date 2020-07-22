@@ -99,7 +99,7 @@ public class ListingServlet extends HttpServlet {
     newListing.setProperty("email", email);
     newListing.setProperty("userId", userId);
     newListing.setProperty("timestamp", timestamp);
-    newListing.setProperty("image", imageUrl);
+    newListing.setProperty("imageUrl", imageUrl);
 
 
     datastore.put(newListing);
