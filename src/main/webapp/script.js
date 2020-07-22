@@ -58,12 +58,24 @@ function createDOMListing(listing) {
     timestampHTML.innerText = (new Date(listing.timestamp));
 
     //reset forms on each listing to hidden initially when page is loaded
-    listing.contactForm = false;
-    setContentVisible(contactForm, false);
+    contactForm.hidden = true;
     
     return listingHTML;
 }
 
+/*
+ * Hides and unhides listing-form portion for each listing
+*/
+function toggle_form(button){
+    let toggleButton = button;
+    let listing = toggleButton.closest(".listing");  
+    let contactForm = listing.querySelector('.listing-form');
+    if (contactForm.hidden == true){
+        contactForm.hidden = false;
+    }else {
+        contactForm.hidden = true;
+    }
+}
 /**
  * Loads some hidden HTML fields with user data to pass to backend datastore
  */
@@ -115,22 +127,6 @@ function setContentVisible(contentElement, isVisible) {
     }
 }
 
-function toggle_form(){
-    //fetch servelet pass in key of listing
-    //return listing in json
-    //if formshow true, display form
-    fetch('/toggle').then(res => res.json())
-        .then((fetchedlisting) => {
-            if (listing.contactForm == false){
-                setContentVisible(contactForm, false);
-            }else {
-                setContentVisible(contactForm, true);
-            }
-        });
-    // let hiddenKeys = Array.from(document.getElementsByName("key"));
-    // console.log(hiddenKeys);
-    // if ()
-}
 /**
   * Adjusts links on the nav bar based on whether the user is logged in
  */   

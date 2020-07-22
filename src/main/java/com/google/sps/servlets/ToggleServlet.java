@@ -23,6 +23,7 @@ import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.ServingUrlOptions;
 import java.util.List;
 import java.util.Map;
+import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import java.util.ArrayList;
@@ -32,30 +33,32 @@ public class ToggleServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Gson gson = new Gson();
-    // Get data from client request
+
     String keyString = request.getParameter("key");
     System.out.println(keyString);
     Key keyObject = KeyFactory.stringToKey(keyString);
+    response.setContentType("application/json");
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     try {
-      
         Entity listing = datastore.get(keyObject);
-
         if ("false".equals(listing.getProperty("contactForm"))) {
             listing.setProperty("contactForm", "true");
             datastore.put(listing);
+            System.out.println("change true:" + gson.toJson(listing));
             response.getWriter().println(gson.toJson(listing));
         } else {
             listing.setProperty("contactForm", "false");
             datastore.put(listing);
+            System.out.println("change false:" + gson.toJson(listing));
             response.getWriter().println(gson.toJson(listing));
         }   
     }
     catch (EntityNotFoundException e) {
       // If it's not found, do something
-      response.setContentType("text/html");
-      response.getWriter().println("<h1>Error: listing key not found in datastore!</h1>");
+      String text = "Error: listing key not found in datastore!";
+      System.out.println (text);
+      response.getWriter().println(text);
     }
 }
 }

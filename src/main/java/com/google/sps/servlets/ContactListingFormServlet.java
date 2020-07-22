@@ -21,6 +21,7 @@ import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;
 import com.google.appengine.api.images.ServingUrlOptions;
+import com.google.appengine.api.datastore.EntityNotFoundException;
 import java.util.List;
 import java.util.Map;
 import com.google.appengine.api.datastore.Key;
@@ -31,8 +32,6 @@ import java.util.ArrayList;
 public class ContactListingFormServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Gson gson = new Gson();
-    // Get data from client request
     String keyString = request.getParameter("key");
     System.out.println(keyString);
     Key keyObject = KeyFactory.stringToKey(keyString);
@@ -41,11 +40,13 @@ public class ContactListingFormServlet extends HttpServlet {
     try {
         Entity listing = datastore.get(keyObject);
         String email = (String) listing.getProperty("email");
+        //added System.out for testing and debigging
+        System.out.println(email);
+        //can use email for API here
     }
     catch (EntityNotFoundException e) {
       // If it's not found, do something
-      response.setContentType("text/html");
-      response.getWriter().println("<h1>Error: listing key not found in datastore!</h1>");
+      System.out.println ("Error: listing key not found in datastore!");
     }
 }
 }

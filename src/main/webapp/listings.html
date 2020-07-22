@@ -33,10 +33,7 @@
           </div>
           <div class="listing-footer">
             <p class="timestamp"></p>
-            <form action="/toggle" method="POST">   
-                <button onclick="toggle_form();" id="contactButton"type="button">Contact User</button> 
-                <input type="hidden" name="key" value="">
-            </form>
+                <button onclick="toggle_form(this);" class="contactButton" type="button">Contact User</button> 
           </div>
          <div class="listing-form">
              <form action="/contactListingform" method="POST">
