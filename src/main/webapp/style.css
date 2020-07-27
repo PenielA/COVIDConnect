@@ -10,6 +10,63 @@ body {
 .content-container {
   width: 80%;
   margin: auto;
+  margin-bottom: 5%;
+}
+
+hr {
+  margin-top: 7%;
+  margin-bottom: 7%;
+}
+
+/**
+ * Styles for landing page
+ */
+.landing-header {
+  text-align: center;
+  margin-top: 10%;
+}
+
+.landing-header h1 {
+  font-size: 46px;
+}
+
+.button-select {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.green-button-lg {
+  border: 2px solid grey;
+  background-color: transparent;
+  padding: 11px 32px;
+  border-radius: 30px;
+  font-weight: 700;
+  text-decoration: none;
+  color: black;
+}
+
+.green-button-lg:hover {
+  color: white;
+  background-color: #0F9D58;
+  border: 2px solid white;
+}
+
+#help-btn-left {
+  margin-right: 20px;
+}
+
+#help-btn-right {
+  margin-left: 20px;
+}
+
+.about-wrapper {
+  width: 85%;
+  margin: auto;
+}
+
+.about-wrapper h2{
+  font-size: 30px;
 }
 
 /* Styles for NEW LISTING page.
@@ -54,7 +111,7 @@ nav {
   text-align: center;
 }
 
-.form-container input {
+#subject-line {
   width: 35%;
   border: 2px solid black;
   border-radius: 4px;
@@ -73,7 +130,11 @@ nav {
 
 .form-container button {
   margin-top: 5%;
-  float: right;
+}
+
+.spaced-button-row {
+  display: flex;
+  justify-content: flex-end;
 }
 
 /* Styling for LISTINGS page that displays all listings */
@@ -93,9 +154,11 @@ nav {
   border: 2px solid black;
   border-bottom: none; /* supplied by body's border */
   border-radius: 10px 10px 0px 0px;
-  background-color: #eaeaea;
+  background-color: #0F9D58;
   display: flex;
   justify-content: space-between;
+  color: white;
+  font-weight: 600;
 }
 
 .listing-body {
@@ -115,4 +178,15 @@ nav {
   border-radius: 0px 0px 10px 10px;
   display: flex;
   justify-content: space-between;
+}
+
+.listing-button {
+  border: 1px solid grey;
+  border-radius: 10px;
+  padding: 4px 10px;
+}
+
+.listing-button:hover {
+  color: white;
+  background-color: #0F9D58;
 }

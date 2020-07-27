@@ -19,7 +19,7 @@
         </ul> 
     </nav>
     <div class="content-container load-auth">
-      <h1>Listings!</h1>
+      <h1>Help needed:</h1>
       <div id="listings-container"></div>
       
       <template id="listing-template">
@@ -34,14 +34,14 @@
           </div>
           <div class="listing-footer">
             <p class="timestamp"></p>
-                <button onclick="toggle_form(this);" class="contactButton" type="button">Contact User</button> 
+                <button onclick="toggle_form(this);" class="listing-button" type="button">Contact User</button> 
           </div>
          <div class="listing-form">
              <form action="/contactListingform" method="POST">
               <input type="hidden" name="key" value="">
               <p>Type message to contact owner of this post</p>
               <input type="text" name="message" placeholder="Hi my name is John and I can help with..." required>
-              <button type="submit">Send Message</button>
+              <button class="listing-button" type="submit">Send Message</button>
              </form>
          </div>
         </div>
