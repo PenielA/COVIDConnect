@@ -23,14 +23,17 @@
 
       <form id="my-post" action="/listings" method="POST" enctype="multipart/form-data">
         <p>Brief summary of what you need</p>
+        <input type="text" name="subject" id="subject-line" placeholder="Need help moving" required>
         <input type="text" name="email" hidden>
         <input type="text" name="userId" hidden>
-        <input type="text" name="subject" placeholder="Need help moving" required>
-        <p>Detailed explanation</p>
+        <p>Relevant photo can be attached here</p>
         <input type="file" name="image">
+        <p>Detailed explanation</p>
         <textarea name="description" placeholder="I'm trying to move to another city for my new job..." required></textarea>
         <br>
-        <button type="submit">Create Listing!</button>
+        <div class="spaced-button-row"> 
+          <button class="green-button-lg" type="submit">Create Listing!</button>
+        </div>
       </form>
     </div>
   </body>
