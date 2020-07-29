@@ -6,8 +6,7 @@ let currentUser;
   * and chained promises to call fetch_auth_info and getListings
  */
 function loadListings() {
-    fetch_auth_info();
-    getListings();
+    fetch_auth_info().then(res => getListings());
 }
 
 /**
@@ -40,6 +39,7 @@ function createDOMListing(listing) {
     let body = listingHTML.querySelector('.listing-body');
     let footer = listingHTML.querySelector('.listing-footer');
     let contactForm = listingHTML.querySelector('.listing-form');
+    let deleteForm = listingHTML.querySelector('form[action="/deleteListing"');
 
     // Populate fields
     // Top bar of listing (according to wireframe)
@@ -50,9 +50,20 @@ function createDOMListing(listing) {
     body.querySelector('.body-desc').innerText = listing.description;
     body.querySelector('#image-Url').src = listing.imageUrl;
 
-    // Fill in hidden key data
-    let hiddenKey = contactForm.querySelector('input[name="key"]');
-    hiddenKey.setAttribute('value', listing.uniqueKey);
+    // User's own post, remove contact button HTML / form
+    if (currentUser.info.userId === listing.userId) {
+      let hiddenKey = deleteForm.querySelector('input[name="key"]');
+      let contactButton = footer.querySelector('.listing-button');
+      hiddenKey.setAttribute('value', listing.uniqueKey);
+      contactForm.parentNode.removeChild(contactForm);
+      contactButton.parentNode.removeChild(contactButton);
+    }
+    else { // Not user's post, remove delete button
+      // Fill in hidden key data
+      let hiddenKey = contactForm.querySelector('input[name="key"]');
+      hiddenKey.setAttribute('value', listing.uniqueKey);
+      deleteForm.parentNode.removeChild(deleteForm);
+    }
 
     // Bottom bar of listing.
     let timestampHTML = footer.querySelector('.timestamp');
@@ -140,13 +151,12 @@ function fetch_auth_info(){
   //allows us to pass in which page the user is on to use in servelet
   let currentUrl = window.location.href;
   let currentPage = currentUrl.substring(currentUrl.lastIndexOf('/'));
-  currentPage = currentPage === '/?authuser=0' ? '/index.html' : currentPage;
+  currentPage = (currentPage.includes('/?authuser=0') || currentPage === '/') ? '/index.html' : currentPage;
   const params = new URLSearchParams();
   params.append('currentPage', currentPage);
   
   //assigns a loginurl/logouturl to navbar to display
   // or it redirects directly to login google page
-  console.log(currentPage);
   return fetch('/AuthServlet', {
     method: 'POST',
     body: params
