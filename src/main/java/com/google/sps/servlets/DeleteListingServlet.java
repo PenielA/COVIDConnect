@@ -18,6 +18,8 @@ import com.google.gson.Gson;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.EntityNotFoundException;
@@ -37,8 +39,32 @@ public class DeleteListingServlet extends HttpServlet {
     Key listingKey = KeyFactory.stringToKey(keyString);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
-    datastore.delete(listingKey);
-    response.sendRedirect("/listings.html");
+    UserService userService = UserServiceFactory.getUserService();
+    if (userService.isUserLoggedIn()) {
+      String currentUserId = userService.getCurrentUser().getUserId();
+      try {
+        Entity foundListing = datastore.get(listingKey);
+        String listingUserId = (String) foundListing.getProperty("userId");
+        if (currentUserId.equals(listingUserId)) {
+          datastore.delete(listingKey);
+          response.sendRedirect("/listings.html");
+          System.out.println("Post successfully removed");
+        }
+        else { // listing does not belong to user
+          response.setContentType("text/html");
+          response.getWriter().println("<h1>Error: You tried to delete a post that was not yours!</h1>");
+        }
+      }
+      catch (EntityNotFoundException e) { // listing not found
+        // If it's not found, do something
+        response.setContentType("text/html");
+        response.getWriter().println("<h1>Error: listing key not found in datastore!</h1>");
+      }
+    }
+    else { // user is not even logged in.
+      response.setContentType("text/html");
+      response.getWriter().println("<h1>Error: You cannot delete a listing if you're not logged in...</h1>");
+    }
   }
 
 }
