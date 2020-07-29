@@ -190,3 +190,15 @@ nav {
   color: white;
   background-color: #0F9D58;
 }
+
+.delete-button {
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 4px 10px;
+  background-color: #DB4437;
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: #c93f32;
+}

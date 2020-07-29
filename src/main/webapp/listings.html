@@ -34,7 +34,11 @@
           </div>
           <div class="listing-footer">
             <p class="timestamp"></p>
-                <button onclick="toggle_form(this);" class="listing-button" type="button">Contact User</button> 
+            <form action="/deleteListing" method="POST">
+              <input type="hidden" name="key" value="">
+              <button class="delete-button" type="submit">Delete Listing</button>
+            </form>
+            <button onclick="toggle_form(this);" class="listing-button" type="button">Contact User</button> 
           </div>
          <div class="listing-form">
              <form action="/contactListingform" method="POST">
